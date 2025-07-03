@@ -2,7 +2,7 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { courseCategories, courseLevels, courseSchema, CourseSchemaType, courseStatus } from "@/lib/zodSchemas";
-import { ArrowLeft, PlusIcon, SparkleIcon } from "lucide-react";
+import { ArrowLeft, Loader2, PlusIcon, SparkleIcon } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -13,26 +13,50 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RichTextEditor } from "@/components/rich-text-editor/Editor";
 import { Uploader } from "@/components/file-uploader/Uploader";
+import { useTransition } from "react";
+import { tryCatch } from "@/hooks/try-catch";
+import { CreateCourse } from "./action";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function CourseCreatePage(){
+    const [isPending,startTransition] = useTransition();
+    const router = useRouter();
+
     const form = useForm<CourseSchemaType>({
         resolver: zodResolver(courseSchema),
         defaultValues: {
-        title:'',
-        description:'',
-        fileKey:'',
-        price:0,
-        duration:0,
-        level:"Beginner",
-        category:"Health & Fitness",
-        status:"Draft",
-        slug:'',
-        smallDescription:'',
-    },
+            title:'',
+            description:'',
+            fileKey:'',
+            price:0,
+            duration:0,
+            level:"Beginner",
+            category:"Health & Fitness",
+            status:"Draft",
+            slug:'',
+            smallDescription:'',
+        },
   });
 
   function onSubmit(values: CourseSchemaType) {
-    console.log(values)
+    startTransition(async ()=>{
+        const { data: result, error } = await tryCatch(CreateCourse(values))
+
+        if(error) {
+            toast.error("An unexpected error occured. Please try again")
+            return;
+        }
+
+        if(result.status === "success"){
+            toast.success(result.message)
+            form.reset()
+            router.push("/admin/courses")
+        } else if(result.status === "error"){
+            toast.error(result.message)
+            return;
+        }
+    })
   }
     return (
         <>
@@ -132,7 +156,7 @@ export default function CourseCreatePage(){
                                         <FormItem className="w-full">
                                             <FormLabel>Thumbnail image</FormLabel>
                                             <FormControl>
-                                                <Uploader/>
+                                                <Uploader value={field.value} onChange={field.onChange}/>
                                             </FormControl>
                                         <FormMessage/>
                                     </FormItem>
@@ -255,8 +279,16 @@ export default function CourseCreatePage(){
                                     )}
                                 />
 
-                            <Button>
-                               Create Course <PlusIcon className="ml-1" size={16}/> 
+                            <Button type="submit" disabled={isPending}>
+                               {isPending?
+                                <>
+                                    <Loader2 className="animate-spin ml-1"/>
+                                </> 
+                                :
+                                <>
+                                     Create Course <PlusIcon className="ml-1" size={16}/> 
+                                </>
+                                }
                             </Button>
                         </form>
                     </Form>

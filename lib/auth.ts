@@ -1,6 +1,5 @@
-import "server-only"
-
 import { betterAuth } from "better-auth";
+import { admin } from "better-auth/plugins"
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./db";
 import { env } from "./env";
@@ -28,5 +27,6 @@ export const auth = betterAuth({
                 });
             },
         }),
+        admin()
     ]
 });
