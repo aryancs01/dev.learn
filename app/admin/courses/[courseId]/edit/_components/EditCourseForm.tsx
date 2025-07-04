@@ -16,31 +16,36 @@ import { useTransition } from "react";
 import { tryCatch } from "@/hooks/try-catch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { CreateCourse } from "../../../create/action";
+import { AdminCourseSingleType } from "@/app/data/admin/admin-get-course";
+import { editCourse } from "../action";
 
-export function EditCourseForm() {
+interface iAppProps{
+    data: AdminCourseSingleType
+}
+
+export function EditCourseForm({data}:iAppProps) {
     const [isPending,startTransition] = useTransition();
     const router = useRouter();
     
     const form = useForm<CourseSchemaType>({
         resolver: zodResolver(courseSchema),
         defaultValues: {
-            title:'',
-            description:'',
-            fileKey:'',
-            price:0,
-            duration:0,
-            level:"Beginner",
-            category:"Health & Fitness",
-            status:"Draft",
-            slug:'',
-            smallDescription:'',
+            title:data.title,
+            description:data.description,
+            fileKey:data.fileKey,
+            price:data.price,
+            duration:data.duration,
+            level:data.level,
+            category:data.category as CourseSchemaType['category'],
+            status:data.status,
+            slug:data.slug,
+            smallDescription:data.smallDescription,
         },
     });
 
     function onSubmit(values: CourseSchemaType) {
     startTransition(async ()=>{
-        const { data: result, error } = await tryCatch(CreateCourse(values))
+        const { data: result, error } = await tryCatch(editCourse(values,data.id))
 
         if(error) {
             toast.error("An unexpected error occured. Please try again")
@@ -264,10 +269,11 @@ export function EditCourseForm() {
                     {isPending?
                     <>
                         <Loader2 className="animate-spin ml-1"/>
+                        Updating...
                     </> 
                     :
                     <>
-                        Create Course <PlusIcon className="ml-1" size={16}/> 
+                        Update Course <PlusIcon className="ml-1" size={16}/> 
                     </>
                     }
                 </Button>

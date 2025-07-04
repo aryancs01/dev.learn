@@ -20,6 +20,7 @@ export async function adminGetCourse(id:string){
             duration:true,
             level: true,
             status: true,
+            slug:true,
             smallDescription: true,
             category: true
         }
@@ -31,3 +32,5 @@ export async function adminGetCourse(id:string){
 
     return data;
 }
+
+export type AdminCourseSingleType = Awaited<ReturnType<typeof adminGetCourse>>
