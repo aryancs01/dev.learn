@@ -127,7 +127,7 @@ model Lesson {
   description String?
   thumbnailKey  String?
   videoKey  String?
-  position  String
+  position  Int
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
 
