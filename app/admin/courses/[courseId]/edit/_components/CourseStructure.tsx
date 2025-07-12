@@ -13,6 +13,10 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { reorderChapters, reorderLessons } from '../action';
+import { NewChapterModal } from './NewChapterModal';
+import { NewLessonModal } from './NewLessonModal';
+import { DeleteLesson } from './DeleteLesson';
+import { DeleteChapter } from './DeleteChapter';
 
 interface iAppProps {
     data:AdminCourseSingleType
@@ -243,6 +247,7 @@ export function CourseStructure({data}:iAppProps){
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between border-b border-border">
                     <CardTitle>Chapters</CardTitle>
+                    <NewChapterModal courseId={data.id}/>
                 </CardHeader>
                 <CardContent className='space-y-8'>
                     <SortableContext 
@@ -272,9 +277,10 @@ export function CourseStructure({data}:iAppProps){
                                                     </CollapsibleTrigger>
                                                     <p className='cursor-pointer hover:text-primary pl-2'>{item.title}</p>
                                                 </div>
-                                                <Button size="icon" variant="outline">
-                                                    <Trash2 className='size-4'/>
-                                                </Button>
+                                                <DeleteChapter
+                                                    chapterId={item.id}
+                                                    courseId={data.id}
+                                                />
                                             </div>
 
                                             <CollapsibleContent>
@@ -293,19 +299,21 @@ export function CourseStructure({data}:iAppProps){
                                                                                 {lesson.title}
                                                                             </Link>
                                                                         </div>
-                                                                        <Button variant="outline" size="icon">
-                                                                            <Trash2 className='size-4'/>
-                                                                        </Button>
+                                                                        <DeleteLesson
+                                                                            chapterId={item.id}
+                                                                            courseId={data.id}
+                                                                            lessonId={lesson.id}
+                                                                        />
                                                                     </div>
                                                                 )}
                                                             </SortableItem>
                                                         ))}
                                                     </SortableContext>
                                                     <div className='p-2'>
-                                                        <Button
-                                                            className='w-full'
-                                                            variant="outline"
-                                                        >Create New Lesson</Button>
+                                                        <NewLessonModal
+                                                            chapterId={item.id}
+                                                            courseId={data.id}               
+                                                        />
                                                     </div>
                                                 </div>
                                             </CollapsibleContent>
