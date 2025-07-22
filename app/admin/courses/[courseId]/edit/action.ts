@@ -7,7 +7,7 @@ import { ApiResponse } from "@/lib/types";
 import { ChapterSchemaType, chaptersSchema, courseSchema, CourseSchemaType, LessonSchemaType, lessonsSchema } from "@/lib/zodSchemas";
 import { request } from "@arcjet/next";
 import { revalidatePath } from "next/cache";
-
+ 
 const aj = arcjet.withRule(
     fixedWindow({
         mode: "LIVE",
