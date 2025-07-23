@@ -5,10 +5,18 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export default function VerifyRequest(){
+export default function VeriflyRequestRoute(){
+    return (
+        <Suspense>
+            <VerifyRequest/>
+        </Suspense>
+    )
+}
+
+function VerifyRequest(){
     const [otp,setOTP] = useState("")
     const [emailPending,startEmailTransition] = useTransition();
     const redirect = useRouter();
