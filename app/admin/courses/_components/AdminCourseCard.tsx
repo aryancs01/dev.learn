@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useConstructUrl } from "@/hooks/use-construct-url";
-import { ArrowRight, EyeIcon, MoreVertical, Pencil, School, TimerIcon, Trash, Trash2 } from "lucide-react";
+import { ArrowRight, EyeIcon, MoreVertical, Pencil, School, TimerIcon, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

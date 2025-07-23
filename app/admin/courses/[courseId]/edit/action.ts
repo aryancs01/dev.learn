@@ -392,7 +392,7 @@ export async function deleteChapter({chapterId,courseId}:{
             status: "success",
             message:"Chapter deleted Successfully"
         }
-    }catch(error){
+    }catch{
         return {
             status:"error",
             message:"Failed to delete Chapter"

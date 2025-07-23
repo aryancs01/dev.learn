@@ -19,7 +19,7 @@ export const auth = betterAuth({
     plugins: [
         emailOTP({
             async sendVerificationOTP({ email, otp }) {
-                const { data, error } = await resend.emails.send({
+                await resend.emails.send({
                     from: 'Aryan <noreply@aryansaxena.me>',
                     to: [email],
                     subject: 'dev.learn - verify your email',

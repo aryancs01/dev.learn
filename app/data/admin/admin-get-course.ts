@@ -1,7 +1,6 @@
 import "server-only"
 import { requireAdmin } from "./require-admin"
 import { prisma } from "@/lib/db";
-import { Key } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export async function adminGetCourse(id:string){

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { AdminCourseSingleType } from '@/app/data/admin/admin-get-course';
 import { cn } from '@/lib/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, ChevronRight, FileText, GripVertical, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, FileText, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { toast } from 'sonner';

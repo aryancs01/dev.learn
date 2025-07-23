@@ -2,7 +2,6 @@ import "server-only"
 import { requireUser } from "../user/require-user"
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { lessonsSchema } from "@/lib/zodSchemas";
 
 export async function getLessonContent(lessonId:string){
     const session = await requireUser();

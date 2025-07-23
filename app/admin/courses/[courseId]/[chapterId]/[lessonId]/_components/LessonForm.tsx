@@ -10,13 +10,12 @@ import { Input } from "@/components/ui/input";
 import { tryCatch } from "@/hooks/try-catch";
 import { LessonSchemaType, lessonsSchema } from "@/lib/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, PercentDiamond } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { updateLesson } from "../action";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 interface iAppProps {
     data: AdminLessonType;

@@ -2,7 +2,6 @@
 
 import { requireAdmin } from "@/app/data/admin/require-admin";
 import arcjet, { fixedWindow } from "@/lib/arcjet";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import { ApiResponse } from "@/lib/types";
